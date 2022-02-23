@@ -1,0 +1,11 @@
+title Get the Score & Q&A PDF
+
+note over Application: Application has to show\nthe score and attempted\n Q&A PDF
+Application->Application: Get the testId from the mock test link\n that it received for "get the test link" API
+Application->AWS API Gateway: Invoke "Get the Score & Q&A PDF" API\n with clientId & testId
+AWS API Gateway->AWS Lambda: Forward the clientId & \n testId to Lambda 
+AWS Lambda->DynamoDB: Call the DynamoDB to get the \n client details with clientId and \n test details with testId
+DynamoDB->AWS Lambda: If applicable, give all the \n client details and \ntest details (Score & PDF link)
+AWS Lambda->AWS Lambda: Verify if the client credentials\n are valid and respond\n to API Gateway
+AWS Lambda->AWS API Gateway: Respond to API Gateway\n with the score and Q&A PDF link
+AWS API Gateway->Application: Respond the score\n and Q&A PDF link
